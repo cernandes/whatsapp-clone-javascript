@@ -6,6 +6,8 @@ class WhatsAppController {
 
         this.loadElements();
 
+        this.initEvents();
+
     }
 
     /* loadElements() cria uma 'div' e gera o data-set com todos os elementos 'id' no formato camel case */
@@ -90,6 +92,53 @@ class WhatsAppController {
 
             return this.classList.contains(name);
         }
-        
+
     }//fim elementsPrototype()
+
+    /** initEvents() habilita o menu lateral com opções de contatos */
+    initEvents() {
+
+        this.el.myPhoto.on('click', e => {
+
+            this.closeAllLeftPanel();
+
+            this.el.panelEditProfile.show();
+
+            setTimeout(() => {
+
+                this.el.panelEditProfile.addClass('open');
+            }, 300);
+
+
+        });
+
+        this.el.btnNewContact.on('click', e => {
+
+            this.closeAllLeftPanel();
+
+            this.el.panelAddContact.show();
+
+            setTimeout(() => {
+
+                this.el.panelAddContact.addClass('open');
+            }, 300);
+
+        });
+
+        this.el.btnClosePanelEditProfile.on('click', e => {
+
+            this.el.panelEditProfile.removeClass('open');
+        });
+
+        this.el.btnClosePanelAddContact.on('click', e => {
+
+            this.el.panelAddContact.removeClass('open');
+        });
+    }// fim initEvents()
+
+    closeAllLeftPanel() {
+
+        this.el.panelAddContact.hide();
+        this.el.panelEditProfile.hide();
+    }
 }
