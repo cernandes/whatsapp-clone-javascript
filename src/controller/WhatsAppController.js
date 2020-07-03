@@ -264,7 +264,47 @@ class WhatsAppController {
 
             this.el.modalContacts.hide();
         });
+
+        this.el.btnSendMicrophone.on('click', e => {
+
+            this.el.recordMicrophone.show();
+            this.el.btnSendMicrophone.hide();
+            this.startRecordMicrophoneTime();
+        });
+
+        this.el.btnCancelMicrophone.on('click', e => {
+
+            this.closeRecordMicrophone();
+
+        });
+
+        this.el.btnFinishMicrophone.on('click', e => {
+
+            this.closeRecordMicrophone();
+
+        });
+
     }// fim initEvents()
+
+    /* startRecordMicrophoneTime() inicia o timer do microfone */
+    startRecordMicrophoneTime() {
+
+        let start = Date.now();
+
+        this._recordMicrophoneInterval = setInterval(() => {
+
+            this.el.recordMicrophoneTimer.innerHTML = (Date.now() - start)
+
+        }, 100);
+    }// fim startRecordMicrophoneTime()
+
+    /*closeRecordMicrophone() fecha o painel do microfone */
+    closeRecordMicrophone() {
+
+        this.el.recordMicrophone.hide();
+        this.el.btnSendMicrophone.show();
+        clearInterval(this._recordMicrophoneInterval);
+    }// fim closeRecordMicrophone()
 
     /* closeAllMainPanel() controla o fechamento do painel principal */
     closeAllMainPanel() {
