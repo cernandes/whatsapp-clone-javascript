@@ -1,5 +1,5 @@
 /**classe estática para gerar o data-set dos elementos e transforma-los para o padrão camel case */
-class Format {
+export class Format {
 
     /* formata todos os IDs separados por traço em camelcase */
     static getCamelCase(text) {
