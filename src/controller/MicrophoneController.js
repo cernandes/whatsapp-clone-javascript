@@ -1,6 +1,10 @@
-export class MicrophoneController {
+import { ClassEvent } from "../util/ClassEvent";
+
+export class MicrophoneController extends ClassEvent {
 
     constructor() {
+
+        super();
 
         navigator.mediaDevices.getUserMedia({
             audio: true
@@ -20,6 +24,7 @@ export class MicrophoneController {
 
             console.error(error);
         });
+
     }
 
     stop() {
