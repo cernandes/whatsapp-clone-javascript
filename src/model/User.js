@@ -30,7 +30,7 @@ export class User extends Model {
             User.findByEmail(id).onSnapshot(doc => {
 
                 this.fromJSON(doc.data());
-                
+
                 s(doc);
             });
         });
@@ -48,5 +48,14 @@ export class User extends Model {
     static findByEmail(email) {
 
         return User.getRef().doc(email);
+    }
+
+    addContact(contact) {
+
+        User.getRef()
+            .doc(this.email)
+            .collection('contacts')
+            .doc(btoa(contact.email))
+            .set(contact.toJSON());
     }
 }
