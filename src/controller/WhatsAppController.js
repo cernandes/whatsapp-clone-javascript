@@ -39,6 +39,8 @@ export class WhatsAppController {
                     let photo2 = this.el.myPhoto.querySelector('img');
                     photo2.src = data.photo;
                     photo2.show();
+
+                    this.el.imgDefaultPanelEditProfile.hide();
                 }
 
             });
@@ -219,7 +221,14 @@ export class WhatsAppController {
 
         this.el.btnSavePanelEditProfile.on('click', e => {
 
-            console.log(this.el.btnSavePanelEditProfile.innerHTML)
+            this.el.btnSavePanelEditProfile.disabled = true;
+
+            this._user.name = this.el.btnSavePanelEditProfile.innerHTML;
+
+            this._user.save().then(() => {
+
+                this.el.btnSavePanelEditProfile.disabled = false;
+            });
         });
 
         this.el.formPanelAddContact.on('submit', e => {
