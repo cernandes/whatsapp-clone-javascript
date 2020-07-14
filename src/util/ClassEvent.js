@@ -24,7 +24,7 @@ export class ClassEvent {
 
             this._events[eventName].forEach(func => {
 
-                func.aplly(null, args)
+                func.apply(null, args)
 
             });
         }
