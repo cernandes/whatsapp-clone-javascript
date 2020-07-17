@@ -75,7 +75,7 @@ export class WhatsAppController {
 
                 let contact = doc.data();
 
-                let div = documents.createElement('div');
+                let div = document.createElement('div');
 
                 div.className = 'contact-item'
 
@@ -191,18 +191,31 @@ export class WhatsAppController {
 
                     data.id = doc.id;
 
+                    let message = new Message();
+
+                    message.fromJSON(data);
+                    
+                    let me = (data.from === this._user.email);
+
                     if (!this.el.panelMessagesContainer.querySelector('#_' + data.id)) {
+                        
+                        if (!me) {
 
-
-                        let message = new Message();
-
-                        message.fromJSON(data);
-
-                        let me = (data.from === this._user.email);
+                            doc.ref.set({
+                                status: 'read'
+                            }, {
+                                merge: true
+                            })
+                        }
 
                         let view = message.getViewElement(me)
 
                         this.el.panelMessagesContainer.appendChild(view);
+
+                    } else if (me) {
+
+                        let msgEl = this.el.panelMessagesContainer.querySelector('#_' + data.id);
+                        msgEl.querySelector('.message-status').innerHTML = message.getStatusViewElement().outerHTML;
                     }
 
                 });
@@ -416,7 +429,7 @@ export class WhatsAppController {
 
                     Chat.createIfNotExists(this._user.email, contact.email).then(chat => {
 
-                        contact.chadId = chat.id;
+                        contact.chatId = chat.id;
 
                         this._user.chatId = chat.id;
 
