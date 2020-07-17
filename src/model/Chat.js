@@ -1,5 +1,5 @@
 import { Model } from "./Model";
-import { Model } from "./Model";
+import { Firebase } from "./../util/Firebase";
 
 export class Chat extends Model {
 
@@ -15,12 +15,12 @@ export class Chat extends Model {
 
     static getRef() {
 
-        return firebase.db().collection('/chats');
+        return Firebase.db().collection('/chats');
     }
 
     static create(meEmail, contactEmail) {
 
-        return new Promisse((s, f) => {
+        return new Promise((s, f) => {
 
             let users = {};
 
@@ -44,7 +44,7 @@ export class Chat extends Model {
 
     static find(meEmail, contactEmail) {
 
-        Chat.getRef()
+        return Chat.getRef()
             .where(btoa(meEmail), '==', true)
             .where(btoa(contactEmail), '==', true)
             .get();
