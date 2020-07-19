@@ -31,7 +31,7 @@ export class Message extends Model {
 
             case 'contact':
                 div.innerHTML = `
-                    <div class="_3_7SH kNKwo tail">
+                    <div class="_3_7SH kNKwo tail" id="_${this.id}">
                         <span class="tail-container"></span>
                         <span class="tail-container highlight"></span>
                         <div class="_1YNgi copyable-text">
@@ -73,7 +73,7 @@ export class Message extends Model {
                 break;
             case 'image':
                 div.innerHTML = `
-                        <div class="_3_7SH _3qMSo ">
+                        <div class="_3_7SH _3qMSo " id="_${this.id}">
                             <div class="KYpDv">
                                 <div>
                                     <div class="_3v3PK" style="width: 330px; height: 330px;">
@@ -118,16 +118,15 @@ export class Message extends Model {
                 div.querySelector('.message-photo').on('load', e => {
 
                     div.querySelector('.message-photo').show();
-                    div.querySelector('._340lu').hide();
+                    div.querySelector('._34Olu').hide();
                     div.querySelector('._3v3PK').css({
-
                         height: 'auto'
                     });
                 });
                 break;
             case 'document':
                 div.innerHTML = `
-                    <div class="_3_7SH _1ZPgd">
+                    <div class="_3_7SH _1ZPgd" id="_${this.id}">
                         <div class="_1fnMt _2CORf">
                             <a class="_1vKRe" href="#">
                                 <div class="_2jTyA" style="background-image: url()"></div>
@@ -171,7 +170,7 @@ export class Message extends Model {
                 break;
             case 'audio':
                 div.innerHTML = `               
-                    <div class="_3_7SH _17oKL">
+                    <div class="_3_7SH _17oKL" id="_${this.id}">
                         <div class="_2N_Df LKbsn">
                             <div class="_2jfIu">
                                 <div class="_2cfqh">
@@ -300,17 +299,21 @@ export class Message extends Model {
 
             }, err => {
 
-                console.error(err)
+                console.error(err);
+
             }, () => {
 
-                Message.send(
-                    chatId,
-                    from,
-                    'image',
-                    uploadTask.snapshot.downloadURL
-                ).then(() => {
+                uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
 
-                    s();
+                    Message.send(
+                        chatId,
+                        from,
+                        'image',
+                        downloadURL
+                    ).then(() => {
+
+                        s();
+                    });
                 });
             });
         });
