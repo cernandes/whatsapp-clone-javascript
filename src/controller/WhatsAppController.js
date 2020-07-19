@@ -20,7 +20,7 @@ export class WhatsAppController {
         this.initEvents();
 
     }
-
+    /*initAuth() seta a autenticação do contato */
     initAuth() {
 
         this._firebase.initAuth().then(response => {
@@ -63,8 +63,9 @@ export class WhatsAppController {
 
             console.log(err);
         });
-    }
+    }//initAuth()
 
+    /* initContacts() inicia a lista de contatos*/
     initContacts() {
 
         this._user.on('contactschange', docs => {
@@ -151,8 +152,9 @@ export class WhatsAppController {
         });
 
         this._user.getContact();
-    }
+    }//fim initContacts()
 
+    /*setActiveChat(contact) seleciona o chat ativo*/
     setActiveChat(contact) {
 
         if (this._contactActive) {
@@ -229,7 +231,7 @@ export class WhatsAppController {
 
                 }
             });
-    }
+    }//fim setActiveChat(contact)
 
     /* loadElements() cria uma 'div' e gera o data-set com todos os elementos 'id' no formato camel case */
     loadElements() {
@@ -527,6 +529,7 @@ export class WhatsAppController {
 
             this.el.btnSendPicture.disabled = true;
 
+            console.log('result', this.el.pictureCamera.src)
             let regex = /^data:(.+);base64,(.*)$/;
             let result = this.el.pictureCamera.src.match(regex);
             let mimeType = result[1];
