@@ -69,7 +69,7 @@ export class User extends Model {
             .set(contact.toJSON());
     }
 
-    getContact(filter = '') {
+    getContacts(filter = '') {
 
         return new Promise((s, f) => {
 
