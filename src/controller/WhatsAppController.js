@@ -151,7 +151,7 @@ export class WhatsAppController {
             });
         });
 
-        this._user.getContact();
+        this._user.getContacts();
     }//fim initContacts()
 
     /*setActiveChat(contact) seleciona o chat ativo*/
@@ -382,7 +382,7 @@ export class WhatsAppController {
                 this.el.inputSearchContactsPlaceholder.show();
             }
 
-            this._user.getContact(this.el.inputSearchContacts.value)
+            this._user.getContacts(this.el.inputSearchContacts.value)
 
         });
 
@@ -739,7 +739,7 @@ export class WhatsAppController {
                 this._microphoneController.startRecorder();
             });
 
-            this.MicrophoneController.on('recordtimer', timer => {
+            this._MicrophoneController.on('recordtimer', timer => {
 
                 this.el.recordMicrophoneTimer.innerHTML = Format.toTime(timer);
             });
@@ -754,6 +754,18 @@ export class WhatsAppController {
         });
 
         this.el.btnFinishMicrophone.on('click', e => {
+
+            this._microphoneController.on('recorded', (file, metadata) => {
+
+                Message.sendAudio(
+                    this._contactActive.chatId,
+                    this._user.email,
+                    file,
+                    metadata,
+                    this._user.photo
+
+                );
+            });
 
             this._microphoneController.stopRecorder();
             this.closeRecordMicrophone();
