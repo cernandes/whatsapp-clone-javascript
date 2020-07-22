@@ -94,7 +94,7 @@ export class ContactsController extends ClassEvent {
             });
 
         });
-
+        
         this._modalEl.show();
     }
 
